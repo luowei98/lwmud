@@ -1,0 +1,200 @@
+body, h1, h2, h3, h4, h5, h6, hr, div, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, textarea, th, td, img {
+    background: transparent;
+    border: medium none;
+    outline: none;
+    vertical-align: baseline;
+}
+
+html {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+body, button, input, select, textarea, h1, h2, h3, h4, h5 {
+    font-family: Consolas, "΢���ź�", "����", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: #ccc;
+}
+
+body, button, input, select, textarea {
+    font-size: 14px;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    /* Internet Explorer */
+    scrollbar-arrow-color: #111;
+    scrollbar-face-color: #333;
+    scrollbar-darkshadow-color: #111;
+    scrollbar-highlight-color: #111;
+    scrollbar-3dlight-color: #111;
+    scrollbar-shadow-color: #111;
+    scrollbar-track-color: #111;
+}
+
+::-webkit-scrollbar {
+    /* WebKit browsers */
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    /* WebKit browsers */
+    background: #333;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #666;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #666;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #666;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: #666;
+}
+
+a {
+    color: #008886;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #00aba9;
+}
+
+a:hover img {
+    opacity: 0.8;
+}
+
+fieldset {
+    border: none;
+}
+
+input[type="text"], input[type="password"], textarea {
+    border-color: #222;
+    background-color: #0e0e0e;
+    color: #ddd;
+    padding: 2px 0.3em;
+    height: 2.12em;
+    line-height: 1.6em;
+}
+
+#vertical {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.pane-content, .input-pane-content {
+    margin: 5px;
+    padding: 0 5px;
+}
+
+.input-pane-content {
+    height: 30px;
+}
+
+input#entry {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    outline-width: 0;
+    clear: both;
+    font-size: 1.2em;
+    color: #ddd;
+}
+
+.message {
+    font-size: 14px;
+    line-height: 1.5em;
+    padding: 0 6px;
+}
+
+.message h4 {
+    color: #ddd;
+}
+
+.message p {
+    text-indent: 2em;
+}
+
+.message ul {
+    padding-left: 2em;
+}
+
+.message .exit {
+    color: #eee;
+}
+
+#scroll-pane {
+    overflow: auto;
+}
+
+.k-textbox {
+    width: 11.8em;
+}
+
+#login-window {
+    margin: 0;
+    padding: 0;
+}
+
+#tickets {
+    width: 420px;
+    height: 287px;
+    margin: 0;
+    padding: 2px 30px 10px 150px;
+    background: url('../img/fyol.png') transparent no-repeat 0 0;
+}
+
+#tickets h3 {
+    border-bottom: 1px solid #666;
+    font-size: 1.2em;
+    padding: 6px;
+}
+
+#tickets ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#tickets li {
+    margin: 10px 0 0 0;
+}
+
+label {
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+}
+
+.required {
+    color: #f90;
+}
+
+.accept {
+    padding-left: 90px;
+}
+
+span.k-tooltip {
+    margin-left: 6px;
+}
+
