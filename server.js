@@ -11,10 +11,10 @@ setInterval(function () {
 }, 10 * 1000);
 
 
-var fu = require("./fu"),
-    sys = require("util"),
-    url = require("url"),
-    qs = require("querystring");
+var fu = require('./fu'),
+    sys = require('util'),
+    url = require('url'),
+    qs = require('querystring');
 
 var MESSAGE_BACKLOG = 200,
     SESSION_TIMEOUT = 60 * 1000;
@@ -24,19 +24,19 @@ var channel = new function () {
         callbacks = [];
 
     this.appendMessage = function (nick, type, text) {
-        var m = { nick: nick, type: type // "msg", "join", "part"
+        var m = { nick: nick, type: type // 'msg', 'join', 'part'
             , text: text, timestamp: (new Date()).getTime()
         };
 
         switch (type) {
-            case "msg":
-                sys.puts("<" + nick + "> " + text);
+            case 'msg':
+                sys.puts('<' + nick + '> ' + text);
                 break;
-            case "join":
-                sys.puts(nick + " join");
+            case 'join':
+                sys.puts(nick + ' join');
                 break;
-            case "part":
-                sys.puts(nick + " part");
+            case 'part':
+                sys.puts(nick + ' part');
                 break;
         }
 
@@ -96,7 +96,7 @@ function createSession(nick) {
         },
 
         destroy: function () {
-            channel.appendMessage(session.nick, "part");
+            channel.appendMessage(session.nick, 'part');
             delete sessions[session.id];
         }
     };
@@ -120,15 +120,20 @@ setInterval(function () {
 
 fu.listen(Number(process.env.PORT || PORT), HOST);
 
-fu.get("/", fu.staticHandler("index.html"));
-fu.get("/kendo/css/kendo.common.min.css", fu.staticHandler("kendo/css/kendo.common.min.css"));
-fu.get("/kendo/css/kendo.metroblack.min.css", fu.staticHandler("kendo/css/kendo.metroblack.min.css"));
-fu.get("/css/style.css", fu.staticHandler("css/style.css"));
-fu.get("/js/jquery-1.8.2.min.js", fu.staticHandler("js/jquery-1.8.2.min.js"));
-fu.get("/kendo/js/kendo.web.min.js", fu.staticHandler("kendo/js/kendo.web.min.js"));
+fu.get('/', fu.staticHandler('index.html'));
 
+fu.get('/kendo/css/kendo.common.min.css', fu.staticHandler('kendo/css/kendo.common.min.css'));
+fu.get('/kendo/css/kendo.metroblack.min.css', fu.staticHandler('kendo/css/kendo.metroblack.min.css'));
+fu.get('/css/style.css', fu.staticHandler('css/style.css'));
 
-fu.get("/who", function (req, res) {
+fu.get('/js/jquery-1.8.2.min.js', fu.staticHandler('js/jquery-1.8.2.min.js'));
+fu.get('/kendo/js/kendo.web.min.js', fu.staticHandler('kendo/js/kendo.web.min.js'));
+fu.get('/js/client.js', fu.staticHandler('js/client.js'));
+
+fu.get('/img/fyol.png', fu.staticHandler('img/fyol.png'));
+fu.get('/kendo/css/MetorBlack/sprite.png', fu.staticHandler('kendo/css/MetorBlack/sprite.png'))
+
+fu.get('/who', function (req, res) {
     var nicks = [];
     for (var id in sessions) {
         if (!sessions.hasOwnProperty(id)) continue;
@@ -139,26 +144,26 @@ fu.get("/who", function (req, res) {
     });
 });
 
-fu.get("/join", function (req, res) {
+fu.get('/join', function (req, res) {
     var nick = qs.parse(url.parse(req.url).query).nick;
     if (nick == null || nick.length == 0) {
-        res.simpleJSON(400, {error: "Bad nick."});
+        res.simpleJSON(400, {error: 'Bad nick.'});
         return;
     }
     var session = createSession(nick);
     if (session == null) {
-        res.simpleJSON(400, {error: "Nick in use"});
+        res.simpleJSON(400, {error: 'Nick in use'});
         return;
     }
 
-    //sys.puts("connection: " + nick + "@" + res.connection.remoteAddress);
+    //sys.puts('connection: ' + nick + '@' + res.connection.remoteAddress);
 
-    channel.appendMessage(session.nick, "join");
+    channel.appendMessage(session.nick, 'join');
     res.simpleJSON(200, { id: session.id, nick: session.nick, rss: mem.rss, starttime: starttime
     });
 });
 
-fu.get("/part", function (req, res) {
+fu.get('/part', function (req, res) {
     var id = qs.parse(url.parse(req.url).query).id;
     var session;
     if (id && sessions[id]) {
@@ -168,9 +173,9 @@ fu.get("/part", function (req, res) {
     res.simpleJSON(200, { rss: mem.rss });
 });
 
-fu.get("/recv", function (req, res) {
+fu.get('/recv', function (req, res) {
     if (!qs.parse(url.parse(req.url).query).since) {
-        res.simpleJSON(400, { error: "Must supply since parameter" });
+        res.simpleJSON(400, { error: 'Must supply since parameter' });
         return;
     }
     var id = qs.parse(url.parse(req.url).query).id;
@@ -188,18 +193,18 @@ fu.get("/recv", function (req, res) {
     });
 });
 
-fu.get("/send", function (req, res) {
+fu.get('/send', function (req, res) {
     var id = qs.parse(url.parse(req.url).query).id;
     var text = qs.parse(url.parse(req.url).query).text;
 
     var session = sessions[id];
     if (!session || !text) {
-        res.simpleJSON(400, { error: "No such session id" });
+        res.simpleJSON(400, { error: 'No such session id' });
         return;
     }
 
     session.poke();
 
-    channel.appendMessage(session.nick, "msg", text);
+    channel.appendMessage(session.nick, 'msg', text);
     res.simpleJSON(200, { rss: mem.rss });
 });

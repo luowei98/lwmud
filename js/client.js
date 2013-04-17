@@ -1,4 +1,4 @@
-var CONFIG = { debug: false, nick: "#"   // set in onConnect
+var CONFIG = { debug: false, nick: '#'   // set in onConnect
     , id: null    // set in onConnect
     , last_message_time: 1, focus: true //event listeners bound in onConnect
     , unread: 0 //updated in the message-processing loop
@@ -7,7 +7,7 @@ var CONFIG = { debug: false, nick: "#"   // set in onConnect
 var nicks = [];
 
 //  CUT  ///////////////////////////////////////////////////////////////////
-/* This license and copyright apply to all code until the next "CUT"
+/* This license and copyright apply to all code until the next 'CUT'
  http://github.com/jherdman/javascript-relative-time-helpers/
 
  The MIT License
@@ -15,7 +15,7 @@ var nicks = [];
  Copyright (c) 2009 James F. Herdman
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of
- this software and associated documentation files (the "Software"), to deal in
+ this software and associated documentation files (the 'Software'), to deal in
  the Software without restriction, including without limitation the rights to
  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
  of the Software, and to permit persons to whom the Software is furnished to do
@@ -24,7 +24,7 @@ var nicks = [];
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -47,7 +47,7 @@ Date.fromString = function (str) {
 //handles another person joining chat
 function userJoin(nick, timestamp) {
     //put it in the stream
-    addMessage(nick, "joined", timestamp, "join");
+    addMessage(nick, 'joined', timestamp, 'join');
     //if we already know about this user, ignore it
     for (var i = 0; i < nicks.length; i++)
         if (nicks[i] == nick) return;
@@ -60,7 +60,7 @@ function userJoin(nick, timestamp) {
 //handles someone leaving
 function userPart(nick, timestamp) {
     //put it in the stream
-    addMessage(nick, "left", timestamp, "part");
+    addMessage(nick, 'left', timestamp, 'part');
     //remove the user from the list
     for (var i = 0; i < nicks.length; i++) {
         if (nicks[i] == nick) {
@@ -80,15 +80,15 @@ util = {
     //  html sanitizer
     toStaticHTML: function (inputHtml) {
         inputHtml = inputHtml.toString();
-        return inputHtml.replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+        return inputHtml.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     },
 
     //pads n with zeros on the left,
     //digits is minimum length of output
-    //zeroPad(3, 5); returns "005"
-    //zeroPad(2, 500); returns "500"
+    //zeroPad(3, 5); returns '005'
+    //zeroPad(2, 500); returns '500'
     zeroPad: function (digits, n) {
         n = n.toString();
         while (n.length < digits)
@@ -97,11 +97,11 @@ util = {
     },
 
     //it is almost 8 o'clock PM here
-    //timeString(new Date); returns "19:49"
+    //timeString(new Date); returns '19:49'
     timeString: function (date) {
         var minutes = date.getMinutes().toString();
         var hours = date.getHours().toString();
-        return this.zeroPad(2, hours) + ":" + this.zeroPad(2, minutes);
+        return this.zeroPad(2, hours) + ':' + this.zeroPad(2, minutes);
     },
 
     //does the argument only contain whitespace?
@@ -114,7 +114,7 @@ util = {
 //used to keep the most recent messages visible
 function scrollDown() {
     window.scrollBy(0, 100000000000000000);
-    $("#entry").focus();
+    $('#entry').focus();
 }
 
 //inserts an event into the stream for display
@@ -137,9 +137,9 @@ function addMessage(from, text, time, _class) {
     //  the time,
     //  the person who caused the event,
     //  and the content
-    var messageElement = $(document.createElement("div"));
+    var messageElement = $(document.createElement('div'));
 
-    messageElement.addClass("message");
+    messageElement.addClass('message');
     if (_class)
         messageElement.addClass(_class);
 
@@ -149,21 +149,21 @@ function addMessage(from, text, time, _class) {
     // If the current user said this, add a special css class
     var nick_re = new RegExp(CONFIG.nick);
     if (nick_re.exec(text))
-        messageElement.addClass("personal");
+        messageElement.addClass('personal');
 
     // replace URLs with links
-    text = text.replace(util.urlRE, '<a target="_blank" href="$&">$&</a>');
+    text = text.replace(util.urlRE, "<a target='_blank' href='$&'>$&</a>");
 
     var content = '<tr>'
-            + '  <td class="date">' + util.timeString(time) + '</td>'
-            + '  <td class="nick">' + util.toStaticHTML(from) + '</td>'
-            + '  <td class="msg-text">' + text + '</td>'
+            + "  <td class='date'>" + util.timeString(time) + '</td>'
+            + "  <td class='nick'>" + util.toStaticHTML(from) + '</td>'
+            + "  <td class='msg-text'>" + text + '</td>'
             + '</tr>'
         ;
     messageElement.html(content);
 
     //the log is the stream that we view
-    $("#middle-pane").append(messageElement);
+    $('#middle-pane').append(messageElement);
 
     //always view the most recent message when it is added
     scrollDown();
@@ -201,18 +201,18 @@ function longPoll(data) {
 
             //dispatch new messages to their appropriate handlers
             switch (message.type) {
-                case "msg":
+                case 'msg':
                     if (!CONFIG.focus) {
                         CONFIG.unread++;
                     }
                     addMessage(message.nick, message.text, message.timestamp);
                     break;
 
-                case "join":
+                case 'join':
                     userJoin(message.nick, message.timestamp);
                     break;
 
-                case "part":
+                case 'part':
                     userPart(message.nick, message.timestamp);
                     break;
             }
@@ -228,8 +228,8 @@ function longPoll(data) {
     }
 
     //make another request
-    $.ajax({ cache: false, type: "GET", url: "/recv", dataType: "json", data: { since: CONFIG.last_message_time, id: CONFIG.id }, error: function () {
-        addMessage("", "long poll error. trying again...", new Date(), "error");
+    $.ajax({ cache: false, type: 'GET', url: '/recv', dataType: 'json', data: { since: CONFIG.last_message_time, id: CONFIG.id }, error: function () {
+        addMessage('', 'long poll error. trying again...', new Date(), 'error');
         transmission_errors += 1;
         //don't flood the servers on error, wait 10 seconds before retrying
         setTimeout(longPoll, 10 * 1000);
@@ -250,8 +250,8 @@ function send(msg) {
     if (CONFIG.debug === false) {
         // XXX should be POST
         // XXX should add to messages immediately
-        jQuery.get("/send", {id: CONFIG.id, text: msg}, function (data) {
-        }, "json");
+        jQuery.get('/send', {id: CONFIG.id, text: msg}, function (data) {
+        }, 'json');
     }
 }
 
@@ -263,7 +263,7 @@ var rss;
 //handle the server's response to our nickname and join request
 function onConnect(session) {
     if (session.error) {
-        alert("error connecting: " + session.error);
+        alert('error connecting: ' + session.error);
         showConnect();
         return;
     }
@@ -279,12 +279,12 @@ function onConnect(session) {
     showChat(CONFIG.nick);
 
     //listen for browser events so we know to update the document title
-    $(window).bind("blur", function () {
+    $(window).bind('blur', function () {
         CONFIG.focus = false;
         updateTitle();
     });
 
-    $(window).bind("focus", function () {
+    $(window).bind('focus', function () {
         CONFIG.focus = true;
         CONFIG.unread = 0;
         updateTitle();
@@ -293,40 +293,40 @@ function onConnect(session) {
 
 //add a list of present chat members to the stream
 function outputUsers() {
-    var nick_string = nicks.length > 0 ? nicks.join(", ") : "(none)";
-    addMessage("users:", nick_string, new Date(), "notice");
+    var nick_string = nicks.length > 0 ? nicks.join(', ') : '(none)';
+    addMessage('users:', nick_string, new Date(), 'notice');
     return false;
 }
 
 //get a list of the users presently in the room, and add it to the stream
 function who() {
-    jQuery.get("/who", {}, function (data, status) {
-        if (status != "success") return;
+    jQuery.get('/who', {}, function (data, status) {
+        if (status != 'success') return;
         nicks = data.nicks;
         outputUsers();
-    }, "json");
+    }, 'json');
 }
 
 $(document).ready(function () {
 
     //submit new messages when the user hits enter if the message isnt blank
-    $("#entry").keypress(function (e) {
+    $('#entry').keypress(function (e) {
         if (e.keyCode != 13 /* Return */) return;
-        var entry = $("#entry");
-        var msg = entry.attr("value").replace("\n", "");
+        var entry = $('#entry');
+        var msg = entry.attr('value').replace('\n', '');
         if (!util.isBlank(msg)) send(msg);
-        entry.attr("value", ""); // clear the entry field.
+        entry.attr('value', ''); // clear the entry field.
     });
 
     //try joining the chat when the user clicks the connect button
-    $("#connectButton").click(function () {
+    $('#connectButton').click(function () {
         //lock the UI while waiting for a response
         showLoad();
-        var nick = $("#nickInput").attr("value");
+        var nick = $('#nickInput').attr('value');
 
         //dont bother the backend if we fail easy validations
         if (nick.length > 50) {
-            alert("Nick too long. 50 character max.");
+            alert('Nick too long. 50 character max.');
             showConnect();
             return false;
         }
@@ -339,9 +339,9 @@ $(document).ready(function () {
         }
 
         //make the actual join request to the server
-        $.ajax({ cache: false, type: "GET" // XXX should be POST
-            , dataType: "json", url: "/join", data: { nick: nick }, error: function () {
-                alert("error connecting to server");
+        $.ajax({ cache: false, type: 'GET' // XXX should be POST
+            , dataType: 'json', url: '/join', data: { nick: nick }, error: function () {
+                alert('error connecting to server');
                 showConnect();
             }, success: onConnect
         });
@@ -354,8 +354,8 @@ $(document).ready(function () {
     }, 10 * 1000);
 
     if (CONFIG.debug) {
-        $("#loading").hide();
-        $("#connect").hide();
+        $('#loading').hide();
+        $('#connect').hide();
         scrollDown();
         return;
     }
@@ -370,6 +370,6 @@ $(document).ready(function () {
 
 //if we can, notify the server that we're going away.
 $(window).unload(function () {
-    jQuery.get("/part", {id: CONFIG.id}, function (data) {
-    }, "json");
+    jQuery.get('/part', {id: CONFIG.id}, function (data) {
+    }, 'json');
 });
