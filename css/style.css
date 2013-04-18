@@ -161,7 +161,7 @@ input#entry {
     height: 287px;
     margin: 0;
     padding: 2px 30px 10px 150px;
-    background: url('../img/fyol.png') transparent no-repeat 0 0;
+    background: url('http://lwmudres.aws.af.cm/images/fyol.png') transparent no-repeat 0 0;
 }
 
 #tickets h3 {
