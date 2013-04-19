@@ -123,8 +123,12 @@ input#entry {
 
 .message {
     font-size: 14px;
-    line-height: 1.5em;
+    line-height: 1.3em;
     padding: 0 6px;
+}
+
+.message h4, .message p, .message ul {
+    margin: 8px 0;
 }
 
 .message h4 {
@@ -198,3 +202,6 @@ span.k-tooltip {
     margin-left: 6px;
 }
 
+.self-entry {
+    color: #88c;
+}

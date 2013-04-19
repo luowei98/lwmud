@@ -6,34 +6,8 @@ var CONFIG = { debug: false, nick: '#'   // set in onConnect
 
 var nicks = [];
 
-//  CUT  ///////////////////////////////////////////////////////////////////
-/* This license and copyright apply to all code until the next 'CUT'
- http://github.com/jherdman/javascript-relative-time-helpers/
 
- The MIT License
-
- Copyright (c) 2009 James F. Herdman
-
- Permission is hereby granted, free of charge, to any person obtaining a copy of
- this software and associated documentation files (the 'Software'), to deal in
- the Software without restriction, including without limitation the rights to
- use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- of the Software, and to permit persons to whom the Software is furnished to do
- so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
-
- /*
+/*
  * Wraps up a common pattern used with this plugin whereby you take a String
  * representation of a Date, and want back a date object.
  */
@@ -41,26 +15,20 @@ Date.fromString = function (str) {
     return new Date(Date.parse(str));
 };
 
-//  CUT  ///////////////////////////////////////////////////////////////////
-
 
 //handles another person joining chat
-function userJoin(nick, timestamp) {
-    //put it in the stream
-    addMessage(nick, 'joined', timestamp, 'join');
+function userJoin(nick) {
     //if we already know about this user, ignore it
     for (var i = 0; i < nicks.length; i++)
         if (nicks[i] == nick) return;
     //otherwise, add the user to the list
     nicks.push(nick);
     //update the UI
-    updateUsersLink();
+    //todo updateUsersPanel();
 }
 
 //handles someone leaving
 function userPart(nick, timestamp) {
-    //put it in the stream
-    addMessage(nick, 'left', timestamp, 'part');
     //remove the user from the list
     for (var i = 0; i < nicks.length; i++) {
         if (nicks[i] == nick) {
@@ -69,7 +37,7 @@ function userPart(nick, timestamp) {
         }
     }
     //update the UI
-    updateUsersLink();
+    //todo updateUsersPanel();
 }
 
 // utility functions
@@ -113,7 +81,7 @@ util = {
 
 //used to keep the most recent messages visible
 function scrollDown() {
-    window.scrollBy(0, 100000000000000000);
+    $('#middle-pane').scrollTop($('#middle-pane')[0].scrollHeight);
     $('#entry').focus();
 }
 
@@ -143,23 +111,28 @@ function addMessage(from, text, time, _class) {
     if (_class)
         messageElement.addClass(_class);
 
+    messageElement.attr('title', util.timeString(time));
+
     // sanitize
     text = util.toStaticHTML(text);
 
-    // If the current user said this, add a special css class
-    var nick_re = new RegExp(CONFIG.nick);
-    if (nick_re.exec(text))
-        messageElement.addClass('personal');
+    /*    // If the current user said this, add a special css class
+     var nick_re = new RegExp(CONFIG.nick);
+     if (nick_re.exec(text))
+     messageElement.addClass('personal');*/
 
     // replace URLs with links
     text = text.replace(util.urlRE, "<a target='_blank' href='$&'>$&</a>");
 
-    var content = '<tr>'
-            + "  <td class='date'>" + util.timeString(time) + '</td>'
-            + "  <td class='nick'>" + util.toStaticHTML(from) + '</td>'
-            + "  <td class='msg-text'>" + text + '</td>'
-            + '</tr>'
-        ;
+    /*    var content = '<h4>天主教堂 - </h4>'
+     + '<p>' + text + '</p>'
+     + '<p>这里明显的出口是 <span class="exit">north</span> 和 <span class="exit">west</span>。</p>'
+     + '<ul>'
+     + '<li>教父(Priest)</li>'
+     + '</ul>'
+     + '<div>></div>'
+     ;*/
+    var content = '<div>' + text + '</div>';
     messageElement.html(content);
 
     //the log is the stream that we view
@@ -171,8 +144,6 @@ function addMessage(from, text, time, _class) {
 
 
 var transmission_errors = 0;
-var first_poll = true;
-
 
 //process updates if we have any, request updates from the server,
 // and call again with response. the last part is like recursion except the call
@@ -186,7 +157,7 @@ function longPoll(data) {
 
     if (data && data.rss) {
         rss = data.rss;
-        updateRSS();
+        //todo updateRSS();
     }
 
     //process any updates we may have
@@ -218,13 +189,8 @@ function longPoll(data) {
             }
         }
         //update the document title to include unread message count if blurred
-        updateTitle();
+        //todo updateTitle();
 
-        //only after the first request for messages do we want to show who is here
-        if (first_poll) {
-            first_poll = false;
-            who();
-        }
     }
 
     //make another request
@@ -243,6 +209,7 @@ function longPoll(data) {
         longPoll(data);
     }
     });
+
 }
 
 //submit a new message to the server
@@ -264,7 +231,7 @@ var rss;
 function onConnect(session) {
     if (session.error) {
         alert('error connecting: ' + session.error);
-        showConnect();
+        //showConnect();
         return;
     }
 
@@ -272,29 +239,36 @@ function onConnect(session) {
     CONFIG.id = session.id;
     starttime = new Date(session.starttime);
     rss = session.rss;
-    updateRSS();
-    updateUptime();
+    //todo updateRSS();
+    //todo updateUptime();
 
     //update the UI to show the chat
-    showChat(CONFIG.nick);
+    //showChat(CONFIG.nick);
+    var loginWindow = $("#login-window").data("kendoWindow");
+    loginWindow.close();
 
     //listen for browser events so we know to update the document title
     $(window).bind('blur', function () {
         CONFIG.focus = false;
-        updateTitle();
+        //todo updateTitle();
     });
 
     $(window).bind('focus', function () {
         CONFIG.focus = true;
         CONFIG.unread = 0;
-        updateTitle();
+        //todo updateTitle();
     });
+
+    who();
+    updateTime();
+
+    longPoll();
 }
 
 //add a list of present chat members to the stream
 function outputUsers() {
     var nick_string = nicks.length > 0 ? nicks.join(', ') : '(none)';
-    addMessage('users:', nick_string, new Date(), 'notice');
+    //addMessage('users:', nick_string, new Date(), 'notice');
     return false;
 }
 
@@ -307,50 +281,131 @@ function who() {
     }, 'json');
 }
 
+function updateTime() {
+    jQuery.get('/time', {}, function (data, status) {
+        if (status != 'success') return;
+        CONFIG.last_message_time = data.time;
+    }, 'json');
+}
+
 $(document).ready(function () {
+    var layer = $('#horizontal');
+
+    layer
+        .width($(window).width() - 2)
+        .height($(window).height() - 2);
+
+    window.onresize = function () {
+        layer
+            .width($(window).width() - 2)
+            .height($(window).height() - 2);
+    }
+
+    layer.kendoSplitter({
+        panes: [
+            { collapsible: true, size: '200px' },
+            { collapsible: false },
+            { collapsible: true, size: '200px' }
+        ]
+    });
+    $('#vertical').kendoSplitter({
+        orientation: 'vertical',
+        panes: [
+            { collapsible: false },
+            { collapsible: false, resizable: false, size: '48px' }
+        ]
+    });
+    $('#left-panelbar').kendoPanelBar({
+        expandMode: 'single'
+    });
+    $('#right-panelbar').kendoPanelBar({
+        expandMode: 'single'
+    });
+
+    $('#login-window').kendoWindow({
+        actions: ['Refresh', 'Close'],
+        draggable: false,
+        height: '300px',
+        modal: true,
+        resizable: false,
+        width: '600px',
+
+        activate: function () {
+            $('#nick').focus();
+        }
+    })
+        .data('kendoWindow')
+        .center()
+        .open();
+
+    var validator = $('#tickets').kendoValidator().data('kendoValidator');
+    $('#login-button').click(function () {
+        if (validator.validate()) {
+            var nick = $("#nick").attr("value");
+            //lock the UI while waiting for a response
+            //todo showLoad();
+
+            //todo
+            /*//don't bother the backend if we fail easy validations
+             if (nick.length > 50) {
+             alert('Nick too long. 50 character max.');
+             showConnect();
+             return false;
+             }
+
+             //more validations
+             if (/[^\w_\-^!]/.exec(nick)) {
+             alert("Bad character in nick. Can only have letters, numbers, and '_', '-', '^', '!'");
+             showConnect();
+             return false;
+             }*/
+
+            //make the actual join request to the server
+            $.ajax({ cache: false, type: "GET" // XXX should be POST
+                , dataType: "json", url: "/join", data: { nick: nick }, error: function () {
+                    alert("error connecting to server");
+                    //todo showConnect();
+                }, success: onConnect
+            });
+            return false;
+        }
+    });
+
+    $('#accept-checkbox')[0].checked = true;
+
+    $('#nick').focus(function () {
+        var input = $(this);
+        setTimeout(function () {
+            input.select();
+        });
+    });
+
+    $('#pwd').focus(function () {
+        var input = $(this);
+        setTimeout(function () {
+            input.select();
+        });
+    });
 
     //submit new messages when the user hits enter if the message isnt blank
     $('#entry').keypress(function (e) {
-        if (e.keyCode != 13 /* Return */) return;
+        if (e.keyCode != 13) return;
+
         var entry = $('#entry');
         var msg = entry.attr('value').replace('\n', '');
+
+        // output entry message
+        addMessage('', msg, null, 'self-entry');
+
+        // clear the entry field.
+        entry.attr('value', '');
+
         if (!util.isBlank(msg)) send(msg);
-        entry.attr('value', ''); // clear the entry field.
-    });
-
-    //try joining the chat when the user clicks the connect button
-    $('#connectButton').click(function () {
-        //lock the UI while waiting for a response
-        showLoad();
-        var nick = $('#nickInput').attr('value');
-
-        //dont bother the backend if we fail easy validations
-        if (nick.length > 50) {
-            alert('Nick too long. 50 character max.');
-            showConnect();
-            return false;
-        }
-
-        //more validations
-        if (/[^\w_\-^!]/.exec(nick)) {
-            alert("Bad character in nick. Can only have letters, numbers, and '_', '-', '^', '!'");
-            showConnect();
-            return false;
-        }
-
-        //make the actual join request to the server
-        $.ajax({ cache: false, type: 'GET' // XXX should be POST
-            , dataType: 'json', url: '/join', data: { nick: nick }, error: function () {
-                alert('error connecting to server');
-                showConnect();
-            }, success: onConnect
-        });
-        return false;
     });
 
     // update the daemon uptime every 10 seconds
     setInterval(function () {
-        updateUptime();
+        //todo updateUptime();
     }, 10 * 1000);
 
     if (CONFIG.debug) {
@@ -363,9 +418,9 @@ $(document).ready(function () {
     //begin listening for updates right away
     //interestingly, we don't need to join a room to get its updates
     //we just don't show the chat stream to the user until we create a session
-    longPoll();
+    //longPoll();
 
-    showConnect();
+    //todo showConnect();
 });
 
 //if we can, notify the server that we're going away.

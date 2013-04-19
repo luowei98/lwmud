@@ -122,16 +122,8 @@ fu.listen(Number(process.env.PORT || PORT), HOST);
 
 fu.get('/', fu.staticHandler('index.html'));
 
-fu.get('/kendo/css/kendo.common.min.css', fu.staticHandler('kendo/css/kendo.common.min.css'));
-fu.get('/kendo/css/kendo.metroblack.min.css', fu.staticHandler('kendo/css/kendo.metroblack.min.css'));
 fu.get('/css/style.css', fu.staticHandler('css/style.css'));
-
-fu.get('/js/jquery-1.8.2.min.js', fu.staticHandler('js/jquery-1.8.2.min.js'));
-fu.get('/kendo/js/kendo.web.min.js', fu.staticHandler('kendo/js/kendo.web.min.js'));
 fu.get('/js/client.js', fu.staticHandler('js/client.js'));
-
-fu.get('/img/fyol.png', fu.staticHandler('img/fyol.png'));
-fu.get('/kendo/css/MetorBlack/sprite.png', fu.staticHandler('kendo/css/MetorBlack/sprite.png'))
 
 fu.get('/who', function (req, res) {
     var nicks = [];
@@ -140,8 +132,7 @@ fu.get('/who', function (req, res) {
         var session = sessions[id];
         nicks.push(session.nick);
     }
-    res.simpleJSON(200, { nicks: nicks, rss: mem.rss
-    });
+    res.simpleJSON(200, { nicks: nicks, rss: mem.rss });
 });
 
 fu.get('/join', function (req, res) {
@@ -156,7 +147,7 @@ fu.get('/join', function (req, res) {
         return;
     }
 
-    //sys.puts('connection: ' + nick + '@' + res.connection.remoteAddress);
+    sys.puts('connection: ' + nick + '@' + res.connection.remoteAddress);
 
     channel.appendMessage(session.nick, 'join');
     res.simpleJSON(200, { id: session.id, nick: session.nick, rss: mem.rss, starttime: starttime
@@ -205,6 +196,11 @@ fu.get('/send', function (req, res) {
 
     session.poke();
 
-    channel.appendMessage(session.nick, 'msg', text);
+    //channel.appendMessage(session.nick, 'msg', text);
+    channel.appendMessage(session.nick, 'msg', '什么?');
     res.simpleJSON(200, { rss: mem.rss });
 });
+
+fu.get('/time'), function (req, res) {
+    res.simpleJSON(200, {time: new Date()});
+}

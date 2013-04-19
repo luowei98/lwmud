@@ -6,15 +6,13 @@
     <meta charset='utf-8'>
 
     <link href="css/style.css" rel="stylesheet"/>
-    <script src="http://lwmudres.aws.af.cm/javascripts/jquery-1.8.2.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
 
     <link href="http://lwmudres.aws.af.cm/kendo/css/kendo.common.min.css" rel="stylesheet"/>
     <link href="http://lwmudres.aws.af.cm/kendo/css/kendo.metroblack.min.css" rel="stylesheet"/>
     <script src="http://lwmudres.aws.af.cm/kendo/js/kendo.web.min.js"></script>
 
-    <!--
     <script src="js/client.js"></script>
-    -->
 
 </head>
 <body>
@@ -110,87 +108,6 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        var layer = $('#horizontal');
-
-        layer
-                .width($(window).width() - 2)
-                .height($(window).height() - 2);
-
-        window.onresize = function () {
-            layer
-                    .width($(window).width() - 2)
-                    .height($(window).height() - 2);
-        }
-
-        layer.kendoSplitter({
-            panes: [
-                { collapsible: true, size: '200px' },
-                { collapsible: false },
-                { collapsible: true, size: '200px' }
-            ]
-        });
-        $('#vertical').kendoSplitter({
-            orientation: 'vertical',
-            panes: [
-                { collapsible: false },
-                { collapsible: false, resizable: false, size: '48px' }
-            ]
-        });
-        $('#left-panelbar').kendoPanelBar({
-            expandMode: 'single'
-        });
-        $('#right-panelbar').kendoPanelBar({
-            expandMode: 'single'
-        });
-
-        $('#login-window').kendoWindow({
-            actions: ['Refresh', 'Close'],
-            draggable: false,
-            height: '300px',
-            modal: true,
-            resizable: false,
-            width: '600px',
-
-            activate: function onOpen() {
-                $('#nick').focus();
-            }
-        })
-                .data('kendoWindow')
-                .center()
-                .open();
-
-        var validator = $('#tickets').kendoValidator().data('kendoValidator');
-        $('#login-button').click(function () {
-            if (validator.validate()) {
-                //make the actual join request to the server
-                $.ajax({ cache: false, type: "GET" // XXX should be POST
-                    , dataType: "json", url: "/join", data: { nick: nick }, error: function () {
-                        alert("error connecting to server");
-                        showConnect();
-                    }, success: onConnect
-                });
-                return false;
-            }
-        });
-
-        $('#accept-checkbox')[0].checked = true;
-
-        $('#nick').focus(function () {
-            var input = $(this);
-            setTimeout(function () {
-                input.select();
-            });
-        });
-        $('#pwd').focus(function () {
-            var input = $(this);
-            setTimeout(function () {
-                input.select();
-            });
-        });
-    });
-</script>
 
 </body>
 </html>
