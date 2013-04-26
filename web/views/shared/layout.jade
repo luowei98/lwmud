@@ -1,0 +1,64 @@
+//-
+   Created with JetBrains WebStorm.
+   User: Robert
+   Date: 13-4-24
+   Time: 上午9:59
+
+doctype 5
+html
+    head
+        title= title
+
+        meta(charset='utf-8')
+
+        link(rel='stylesheet', href='/css/style.css')
+        script(src='/js/jquery-1.8.2.min.js')
+
+//- kendo
+        link(rel='stylesheet', href='/kendo/css/kendo.common.min.css')
+        link(rel='stylesheet', href='/kendo/css/kendo.metroblack.min.css')
+        script(src='/kendo/js/kendo.web.min.js')
+
+        script(src='/js/client.js')
+
+    body
+
+        #horizontal
+            #left-pane
+                include left
+
+            #cnter-pane
+                block main-content
+
+            #right-pane
+                include right
+
+        #login-window(style='display:none')
+            #tickets
+                h3 登录
+                p 《风云天下》即将推出，敬请期待！
+                ul
+                    li
+                        label.required(for='nick') 玩家:
+                        input#nick.k-textbox(
+                        type='text',
+                        name='nick',
+                        placeholder='您的用户名',
+                        validationMessage='请输入您的ID')
+                    li
+                        label.required(for='pwd') 密码:
+                        input#nick.k-textbox(
+                        type='text',
+                        name='pwd',
+                        placeholder='您的密码',
+                        validationMessage='请输入您的密码')
+                    li.accept
+                        input#accept-checkbox(
+                        type='checkbox',
+                        name='accept',
+                        required=true,
+                        validationMessage='您必须同意此项')
+                        | 我接受条款和服务条件！
+                    li.accept
+                        button#login-button.k-button(type='submit') 进入
+

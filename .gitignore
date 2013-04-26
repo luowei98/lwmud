@@ -1,3 +1,6 @@
 Thumbs.db
 *.swp
 .idea/
+node_modules/
+coffee_cache/
+web/public/css/

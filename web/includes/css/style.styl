@@ -1,0 +1,377 @@
+  /**
+   * Created with JetBrains WebStorm.
+   * User Robert
+   * Date 13-4-23
+   * Time 上午1037
+   */
+
+  fcolor
+
+  =
+  #ccc
+bcolor
+
+  =
+  #0e0e0e
+scrollbar-fcolor
+
+  =
+  #111
+scrollbar-bcolor
+
+  =
+  #333
+placeholder-fcolor
+
+  =
+  #666
+link-fcolor
+
+  =
+  #008886
+hover-fcolor
+
+  =
+  #00aba9
+border-fcolor
+
+  =
+  #222
+input-fcolor
+
+  =
+  #ddd
+required-fcolor
+
+  =
+  #f90
+entry-fcolor
+
+  =
+  #88c
+
+html
+  display block
+  height
+
+  100
+  %
+  width
+
+  100
+  %
+
+  .def-block, h1, h2, h3, h4, h5, h6, hr, div, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, textarea, th, td, img
+  background transparent
+  border medium none
+  outline none
+  vertical-align baseline
+
+.def-font-color, button, input, select, textarea, h1, h2, h3, h4, h5
+  font-family Consolas,
+
+  "微软雅黑"
+  ,
+  "宋体"
+  ,
+  Arial, Helvetica, sans-serif
+  font-weight normal
+  color fcolor
+
+body
+
+  @extend
+  .def-block
+
+  @extend
+  .def-font-color
+  
+  background-color bcolor
+  
+  margin
+
+  0
+  padding
+
+  0
+
+  // Internet Explorer
+  scrollbar-arrow-color scrollbar-fcolor
+  scrollbar-face-color scrollbar-bcolor
+  scrollbar-darkshadow-color scrollbar-fcolor
+  scrollbar-highlight-color scrollbar-fcolor
+  scrollbar-3dlight-color scrollbar-fcolor
+  scrollbar-shadow-color scrollbar-fcolor
+  scrollbar-track-color scrollbar-fcolor
+
+
+::-webkit-scrollbar // WebKit browsers
+    width
+
+  8
+  px
+
+::-webkit-scrollbar-thumb // WebKit browsers
+  background scrollbar-bcolor
+
+::-webkit-input-placeholder, // WebKit browsers
+  :-moz-placeholder, // Mozilla Firefox 4 to 18
+  ::-moz-placeholder, // Mozilla Firefox 19+
+  :-ms-input-placeholder // Internet Explorer 10+
+  color placeholder-fcolor
+
+body, button, input, select, textarea
+  font-size
+
+  14
+  px
+
+ul, ol
+  list-style none
+
+a
+  color link-fcolor
+  text-decoration none
+  :hover
+    color hover-fcolor
+      img
+        opacity
+
+  0.8
+
+  fieldset
+  border none
+
+
+input[type="text"],
+  input[type="password"],
+  textarea
+  border-color border-fcolor
+  background-color bcolor
+  color input-fcolor
+  padding
+
+  2
+  px
+
+  0.3
+  em
+  height
+
+  2.12
+  em
+  line-height
+
+  1.6
+  em
+
+
+#vertical
+  height
+
+  100
+  %
+  width
+
+  100
+  %
+  margin
+
+  0
+  auto
+
+.pane-content,
+  .input-pane-content
+  margin
+
+  5
+  px
+  padding
+
+  0
+  5
+  px
+
+.input-pane-content
+  height
+
+  30
+  px
+
+input#entry
+  width
+
+  100
+  %
+  height
+
+  100
+  %
+  background-color bcolor
+  border-width
+
+  0
+  outline-width
+
+  0
+  clear both
+  font-size
+
+  1.2
+  em
+  color input-fcolor
+
+.message
+  font-size
+
+  14
+  px
+  line-height
+
+  1.3
+  em
+  padding
+
+  0
+  6
+  px
+  h4, p, ul
+    margin
+
+  8
+  px
+
+  0
+  h4
+    color input-fcolor
+  p
+    text-indent
+
+  2
+  em
+  ul
+    padding-left
+
+  2
+  em
+  .exit
+    color link-fcolor
+
+
+#scroll-pane
+  overflow auto
+
+.k-textbox
+  width
+
+  11.8
+  em
+
+#login-window
+  margin
+
+  0
+  padding
+
+  0
+
+  #tickets
+  width
+
+  420
+  px
+  height
+
+  287
+  px
+  margin
+
+  0
+  padding
+
+  2
+  px
+
+  30
+  px
+
+  10
+  px
+
+  150
+  px
+  background
+
+  url
+  (
+  '/img/fyol.png'
+  )
+  transparent no-repeat
+
+  0
+  0
+  h3
+    border-bottom
+
+  1
+  px solid #666
+    font-size
+
+  1.2
+  em
+    padding
+
+  6
+  px
+  ul
+    list-style-type none
+    margin
+
+  0
+  padding
+
+  0
+  li
+    margin
+
+  10
+  px
+
+  0
+  0
+  0
+
+  label
+  display inline-block
+  width
+
+  90
+  px
+  text-align right
+
+.required
+  color required-fcolor
+
+.accept
+  padding-left
+
+  90
+  px
+
+span.k-tooltip
+  margin-left
+
+  6
+  px
+
+.self-entry
+  color entry-fcolor
+
+  =
+  #88c
+
+.side-panelbar li ul li
+  text-indent
+
+  1
+  em

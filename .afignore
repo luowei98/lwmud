@@ -1,2 +1,5 @@
 # ignore WebStorm config
 .idea/
+README.md
+coffee_cache/
+web/public/css/
