@@ -21,11 +21,11 @@ app.use express.favicon publicDir + '/img/favicon.ico'
 app.use express.logger 'dev'
 app.use express.bodyParser()
 app.use express.methodOverride()
-app.use stylus.middleware({
-src: path.join(__dirname, 'includes'),
-dest: publicDir
-compress: true
-})
+app.use stylus.middleware(
+  src: path.join(__dirname, 'includes'),
+  dest: publicDir,
+  compress: true
+)
 app.use assets(src: 'includes', build: true)
 app.use express.static publicDir, {maxAge: 31557600000}
 app.use app.router
