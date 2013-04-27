@@ -18,7 +18,6 @@ app.set 'port', Number process.env.PORT || PORT
 app.set 'views', viewDir
 app.set 'view engine', 'jade'
 app.use express.favicon publicDir + '/img/favicon.ico'
-app.use express.logger 'dev'
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use stylus.middleware(
@@ -26,12 +25,16 @@ app.use stylus.middleware(
   dest: publicDir,
   compress: true
 )
-app.use assets(src: 'includes', build: true)
+
+if process.env.NODE_ENV or app.get('env') is 'development'
+  app.use express.logger 'dev'
+  app.use assets(src: 'web/includes')
+else
+  app.use express.errorHandler()
+  app.use assets(src: 'web/includes', buildDir: 'web/.includes_cache', build: true)
+
 app.use express.static publicDir, {maxAge: 31557600000}
 app.use app.router
-
-if app.get('env') is 'production'
-  app.use express.errorHandler()
 
 routes app
 

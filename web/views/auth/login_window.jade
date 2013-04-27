@@ -1,0 +1,35 @@
+//-
+   Created with JetBrains WebStorm.
+   User: Robert
+   Date: 13-4-27
+   Time: 下午2:24
+
+#tickets
+    h3 登录
+    p 《风云天下》即将推出，敬请期待！
+    ul
+        li
+            label.required(for='nick') 玩家:
+            input#nick.k-textbox(
+            type='text',
+            name='nick',
+            placeholder='您的用户名',
+            required,
+            validationMessage='请输入您的ID')
+        li
+            label.required(for='pwd') 密码:
+            input#nick.k-textbox(
+            type='password',
+            name='pwd',
+            placeholder='您的密码',
+            required,
+            validationMessage='请输入您的密码')
+        li.accept
+            input#accept-checkbox(
+            type='checkbox',
+            name='accept',
+            required,
+            validationMessage='您必须同意此项')
+            | 我接受条款和服务条件！
+        li.accept
+            button#login-button.k-button(type='submit') 进入

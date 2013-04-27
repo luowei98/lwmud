@@ -4,3 +4,4 @@ Thumbs.db
 /node_modules
 /.coffee_cache
 /web/public/css
+/web/.includes_cache

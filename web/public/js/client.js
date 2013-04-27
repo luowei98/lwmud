@@ -227,43 +227,6 @@ var starttime;
 // daemon memory usage
 var rss;
 
-//handle the server's response to our nickname and join request
-function onConnect(session) {
-  if (session.error) {
-    alert('error connecting: ' + session.error);
-    //showConnect();
-    return;
-  }
-
-  CONFIG.nick = session.nick;
-  CONFIG.id = session.id;
-  starttime = new Date(session.starttime);
-  rss = session.rss;
-  //todo updateRSS();
-  //todo updateUptime();
-
-  //update the UI to show the chat
-  //showChat(CONFIG.nick);
-  var loginWindow = $("#login-window").data("kendoWindow");
-  loginWindow.close();
-
-  //listen for browser events so we know to update the document title
-  $(window).bind('blur', function () {
-    CONFIG.focus = false;
-    //todo updateTitle();
-  });
-
-  $(window).bind('focus', function () {
-    CONFIG.focus = true;
-    CONFIG.unread = 0;
-    //todo updateTitle();
-  });
-
-  who();
-  updateTime();
-
-  longPoll();
-}
 
 //add a list of present chat members to the stream
 function outputUsers() {
@@ -289,102 +252,7 @@ function updateTime() {
 }
 
 $(document).ready(function () {
-  var layer = $('#horizontal');
 
-  layer
-    .width($(window).width() - 2)
-    .height($(window).height() - 2);
-
-  window.onresize = function () {
-    layer
-      .width($(window).width() - 2)
-      .height($(window).height() - 2);
-  }
-
-  layer.kendoSplitter({
-    panes: [
-      { collapsible: true, size: '200px' },
-      { collapsible: false },
-      { collapsible: true, size: '200px' }
-    ]
-  });
-  $('#vertical').kendoSplitter({
-    orientation: 'vertical',
-    panes: [
-      { collapsible: false },
-      { collapsible: false, resizable: false, size: '48px' }
-    ]
-  });
-  $('#left-panelbar').kendoPanelBar({
-    expandMode: 'single'
-  });
-  $('#right-panelbar').kendoPanelBar({
-    expandMode: 'single'
-  });
-
-  $('#login-window').kendoWindow({
-    // title:false,
-    height: '300px',
-    modal: true,
-    resizable: false,
-    width: '600px',
-
-    activate: function () {
-      $('#nick').focus();
-    }
-  })
-    .data('kendoWindow')
-    .center()
-    .open();
-
-  var validator = $('#tickets').kendoValidator().data('kendoValidator');
-  $('#login-button').click(function () {
-    if (validator.validate()) {
-      var nick = $("#nick").attr("value");
-      //lock the UI while waiting for a response
-      //todo showLoad();
-
-      //todo
-      /*//don't bother the backend if we fail easy validations
-       if (nick.length > 50) {
-       alert('Nick too long. 50 character max.');
-       showConnect();
-       return false;
-       }
-
-       //more validations
-       if (/[^\w_\-^!]/.exec(nick)) {
-       alert("Bad character in nick. Can only have letters, numbers, and '_', '-', '^', '!'");
-       showConnect();
-       return false;
-       }*/
-
-      //make the actual join request to the server
-      $.ajax({ cache: false, type: "GET" // XXX should be POST
-        , dataType: "json", url: "/join", data: { nick: nick }, error: function () {
-          alert("error connecting to server");
-          //todo showConnect();
-        }, success: onConnect
-      });
-      return false;
-    }
-  });
-
-  $('#accept-checkbox')[0].checked = true;
-
-  $('#nick').focus(function () {
-    var input = $(this);
-    setTimeout(function () {
-      input.select();
-    });
-  });
-
-  $('#pwd').focus(function () {
-    var input = $(this);
-    setTimeout(function () {
-      input.select();
-    });
-  });
 
   //submit new messages when the user hits enter if the message isnt blank
   $('#entry').keypress(function (e) {
