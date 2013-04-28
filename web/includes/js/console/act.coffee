@@ -5,6 +5,15 @@
 # Time: 下午4:44
 
 
+CONFIG = {
+  nick: '#',
+  id: null,
+  last_message_time: 1,
+  focus: true,
+  unread: 0
+}
+
+
 # login-button click event
 @login = ->
 
@@ -59,9 +68,17 @@
       # todo longPoll!
   )
 
+send = (msg) ->
+  # XXX should add to messages immediately
+  $.post(
+    "/console/send"
+    {id: CONFIG.id, text: msg}
+    (data) ->
+      CONFIG.last_message_time = data
+    "json"
+  )
 
 $ ->
-
 
   # send message in entry box
   $('#entry').keypress (e) ->
