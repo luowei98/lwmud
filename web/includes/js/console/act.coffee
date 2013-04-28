@@ -12,6 +12,7 @@
   return false if not validator.validate()
 
   nick = $('#nick').attr 'value'
+  status = $('.status')
 
   # todo showLoad(), lock the UI while waiting for a response
 
@@ -40,10 +41,11 @@
     data: { nick: nick },
 
     error: ->
-      alert 'error connection to server'
+      status.text '啊呀! 无法连接服务器!'
 
     success: ->
       # todo check session.error
+      status.text ''
       # todo set CONFIG, update uptime
       loginWindow = $('#login-window').data 'kendoWindow'
       loginWindow.close()
@@ -59,6 +61,7 @@
 
 
 $ ->
+
 
   # send message in entry box
   $('#entry').keypress (e) ->
