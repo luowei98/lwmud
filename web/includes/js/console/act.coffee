@@ -7,6 +7,7 @@
 
 # login-button click event
 @login = ->
+
   validator = $('#tickets').kendoValidator().data 'kendoValidator'
   return false if not validator.validate()
 
@@ -36,31 +37,25 @@
     type: 'POST',
     dataType: 'json',
     url: '/auth/join',
-    data:
-      { nick: nick },
+    data: { nick: nick },
+
     error: ->
-      alert 'error connection to server',
-        success: ->
-          # todo check session.error
-          # todo set CONFIG, update uptime
-          loginWindow = $('#login-window').data 'kendoWindow'
-          loginWindow.close()
+      alert 'error connection to server'
 
-    # todo window blur & focus event
+    success: ->
+      # todo check session.error
+      # todo set CONFIG, update uptime
+      loginWindow = $('#login-window').data 'kendoWindow'
+      loginWindow.close()
 
-    # todo update both sidebar
+      # todo window blur & focus event
 
-    # todo update client time
+      # todo update both sidebar
 
-    # todo longPoll!
+      # todo update client time
+
+      # todo longPoll!
   )
-
-showConnect = ->
-  $('#login-window')
-    .kendoWindow()
-    .data('kendoWindow')
-    .center()
-    .open()
 
 
 $ ->
