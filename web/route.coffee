@@ -10,15 +10,14 @@ notfound = require './controllers/404'
 auth = require './controllers/auth'
 
 module.exports = (app) ->
-  # home
-  app.get '/', home
+    # home
+    app.get '/', home
 
 
-  # auth
-  app.get '/auth/login_window', auth.login_window
-  app.post '/auth/join', auth.join
+    # auth
+    app.get '/auth/login_window', auth.login_window
+    app.post '/auth/join', auth.join
 
-  # 404
-  app.get '*', notfound
+    # 404
+    app.get '*', notfound
 
-#return app.router
