@@ -1,46 +1,12 @@
 /*
  * Created with JetBrains WebStorm.
- * User Robert
- * Date 13-4-23
- * Time 上午1037
+ * User: Robert
+ * Date: 13-4-29
+ * Time: 下午2:27
  */
 
-fcolor = #ccc
-bcolor = #0e0e0e
-scrollbar-fcolor = #111
-scrollbar-bcolor = #333
-placeholder-fcolor = #666
-link-fcolor = #008886
-hover-fcolor = #00aba9
-border-fcolor = #222
-input-fcolor = #ddd
-required-fcolor = #f90
-entry-fcolor = #88c
-
-html
-  display block
-  height 100%
-  width 100%
-
-.def-block, h1, h2, h3, h4, h5, h6, hr, div, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, textarea, th, td, img
-  background transparent
-  border medium none
-  outline none
-  vertical-align baseline
-
-.def-font-color, button, input, select, textarea, h1, h2, h3, h4, h5
-  font-family Consolas, "微软雅黑", "宋体", Arial, Helvetica, sans-serif
-  font-weight normal
-  color fcolor
-
 body
-  @extend .def-block
-  @extend .def-font-color
-  
   background-color bcolor
-  
-  margin 0
-  padding 0
 
   // Internet Explorer
   scrollbar-arrow-color scrollbar-fcolor
@@ -50,7 +16,6 @@ body
   scrollbar-3dlight-color scrollbar-fcolor
   scrollbar-shadow-color scrollbar-fcolor
   scrollbar-track-color scrollbar-fcolor
-
 
 ::-webkit-scrollbar // WebKit browsers
     width 8px
@@ -64,12 +29,6 @@ body
 :-ms-input-placeholder // Internet Explorer 10+
   color placeholder-fcolor
 
-body, button, input, select, textarea
-  font-size 14px
-
-ul, ol
-  list-style none
-
 a
   color link-fcolor
   text-decoration none
@@ -80,7 +39,6 @@ a
 
 fieldset
   border none
-
 
 input[type="text"],
 input[type="password"],
@@ -131,59 +89,8 @@ input#entry
   .exit
     color link-fcolor
 
-
 #scroll-pane
   overflow auto
 
 .k-textbox
   width 11.8em
-
-#login-window
-  margin 0
-  padding 0
-
-#tickets
-  width 420px
-  height 287px
-  margin 0
-  padding 2px 30px 10px 150px
-  background url('/img/login.png') transparent no-repeat 0 0
-  h3
-    border-bottom 1px solid #666
-    font-size 1.2em
-    padding 6px
-  ul
-    list-style-type none
-    margin 0
-    padding 0
-  li
-    margin 10px 0 0 0
-
-label
-  display inline-block
-  width 90px
-  text-align right
-
-.required
-  color required-fcolor
-
-.accept
-  padding-left 90px
-
-span.k-tooltip
-  margin-left 6px
-
-.self-entry
-  color entry-fcolor = #88c
-
-.side-panelbar li ul li
-  text-indent 1em
-
-.accept, .status
-  padding-left: 90px;
-
-.valid
-  color: green;
-
-.invalid
-  color: red;

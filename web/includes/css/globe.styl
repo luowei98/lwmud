@@ -1,0 +1,35 @@
+/*
+ * Created with JetBrains WebStorm.
+ * User: Robert
+ * Date: 13-4-29
+ * Time: 下午2:25
+ */
+
+html
+  display block
+  height 100%
+  width 100%
+
+.def-block, h1, h2, h3, h4, h5, h6, hr, div, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, textarea, th, td, img
+  background transparent
+  border medium none
+  outline none
+  vertical-align baseline
+
+.def-font-color, button, input, select, textarea, h1, h2, h3, h4, h5
+  font-family Consolas, "微软雅黑", "宋体", Arial, Helvetica, sans-serif
+  font-weight normal
+  color fcolor
+
+body
+  @extend .def-block
+  @extend .def-font-color
+
+  margin 0
+  padding 0
+
+body, button, input, select, textarea
+  font-size 14px
+
+ul, ol
+  list-style none
