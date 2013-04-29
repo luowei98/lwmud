@@ -43,6 +43,7 @@ transmission_errors = 0
 longPoll = (data) ->
     if transmission_errors > 2
         showConnect()
+        transmission_errors = 0
         return
 
     #if (data? and data.time)
