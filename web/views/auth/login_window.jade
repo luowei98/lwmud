@@ -4,6 +4,7 @@
    Date: 13-4-27
    Time: 下午2:24
 
+#loading-cover
 #tickets
     h3 登录
     p 《风云天下》即将推出，敬请期待！
@@ -18,7 +19,7 @@
             validationMessage='请输入您的ID')
         li
             label.required(for='pwd') 密码:
-            input#nick.k-textbox(
+            input#pwd.k-textbox(
             type='password',
             name='pwd',
             placeholder='您的密码',
@@ -34,3 +35,5 @@
         li.accept
             button#login-button.k-button(type='submit') 进入
         li.status.invalid
+
+img#preload.hide(src='/css_kendo/MetroBlack/loading-image.gif')

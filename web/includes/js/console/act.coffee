@@ -16,8 +16,8 @@ CONFIG = {
 }
 
 scrollDown = ->
-    $('#middle-pane').scrollTop $('#middle-pane')[0].scrollHeight
-    $('#entry').focus()
+    $('div#middle-pane').scrollTop $('div#middle-pane')[0].scrollHeight
+    $('input#entry').focus()
 
 showMessage = (from, text, time, _class) ->
     return if not text?
@@ -34,7 +34,7 @@ showMessage = (from, text, time, _class) ->
     content = '<div>' + text + '</div>'
     messageElement.html(content)
 
-    $('#middle-pane').append(messageElement)
+    $('div#middle-pane').append(messageElement)
 
     scrollDown()
 
@@ -91,16 +91,12 @@ longPoll = (data) ->
 onConnect = (session) ->
     # todo session check
 
-    # todo updateUptime();
-
-    $('.status').text ''
-
     CONFIG.nick = session.nick
     CONFIG.id   = session.id
     CONFIG.last_message_time = session.starttime
 
     # close login window
-    loginWindow = $('#login-window').data 'kendoWindow'
+    loginWindow = $('div#login-window').data 'kendoWindow'
     loginWindow.close()
 
     $(window).bind 'blur', ->
@@ -116,11 +112,12 @@ onConnect = (session) ->
 
 # login-button click event
 @login = ->
+    $('li.status').text ''
 
-    validator = $('#tickets').kendoValidator().data 'kendoValidator'
+    validator = $('div#tickets').kendoValidator().data 'kendoValidator'
     return false if not validator.validate()
 
-    nick = $('#nick').attr 'value'
+    nick = $('input#nick').attr 'value'
 
     # todo showLoad(), lock the UI while waiting for a response
 
@@ -141,6 +138,7 @@ onConnect = (session) ->
     }
     ###
 
+    kendo.ui.progress($("div#loading-cover"), true);
     $.ajax(
         cache: false,
         type: 'POST',
@@ -148,10 +146,13 @@ onConnect = (session) ->
         url: '/auth/join',
         data: { nick: nick },
 
-        success: onConnect
+        success: (data) ->
+            kendo.ui.progress($("div#loading-cover"), false);
+            onConnect(data)
 
         error: ->
-            $('.status').text '啊呀! 无法连接服务器!'
+            kendo.ui.progress($("div#loading-cover"), false);
+            $('li.status').text '啊呀! 无法连接服务器!'
     )
 
 send = (msg) ->
@@ -167,7 +168,7 @@ send = (msg) ->
 $ ->
 
     # send message in entry box
-    $('#entry').keypress (e) ->
+    $('input#entry').keypress (e) ->
         return if e.keyCode isnt 13
 
         entry = $('#entry');
