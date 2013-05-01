@@ -138,7 +138,8 @@ onConnect = (session) ->
     }
     ###
 
-    kendo.ui.progress($("div#loading-cover"), true);
+    kendo.ui.progress $('div#loading-cover'), true
+    $('div#loading-cover .k-loading-text').text('正在登陆...').css top: 0, left:0
     $.ajax(
         cache: false,
         type: 'POST',
@@ -147,11 +148,11 @@ onConnect = (session) ->
         data: { nick: nick },
 
         success: (data) ->
-            kendo.ui.progress($("div#loading-cover"), false);
+            kendo.ui.progress $('div#loading-cover'), false
             onConnect(data)
 
         error: ->
-            kendo.ui.progress($("div#loading-cover"), false);
+            kendo.ui.progress $('div#loading-cover'), false
             $('li.status').text '啊呀! 无法连接服务器!'
     )
 
