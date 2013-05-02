@@ -58,8 +58,8 @@ $ ->
     ]
 
     # set both side panelbar
-    $('ul#left-panelbar').kendoPanelBar expandMode: 'single'
-    $('ul#right-panelbar').kendoPanelBar expandMode: 'single'
+    $('ul#left-panelbar').kendoPanelBar expandMode: 'multiple'
+    $('ul#right-panelbar').kendoPanelBar expandMode: 'multiple'
 
 
 
