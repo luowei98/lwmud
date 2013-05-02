@@ -12,7 +12,7 @@ lw.kendoWindow(
     modal: true,
     resizable: false,
     width: '600px',
-    content: 'auth/login_window'
+    content: '/auth/login_window'
 
     activate: ->
         $('input#nick').focus()

@@ -19,6 +19,11 @@ module.exports = (app) ->
     app.post '/auth/join', auth.join
 
     # console
+    app.get '/console/', (req, res)->
+        res.redirect '/console'
+    app.get '/console/index', (req, res)->
+        res.redirect '/console'
+    app.get '/console', console.index
     app.post '/console/send', console.send
     app.get '/console/recv', console.recv
 
