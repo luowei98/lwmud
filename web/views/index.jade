@@ -1,0 +1,23 @@
+//-
+   Created with JetBrains WebStorm.
+   User: Robert
+   Date: 13-5-2
+   Time: 下午12:22
+
+doctype 5
+html
+    head
+        title= title
+
+        meta(charset='utf-8')
+
+        != css('kendo/uniform')
+        link(rel='stylesheet', href='/css/home.css')
+
+    body
+
+        #login-box
+            include auth/login
+
+
+        != js('home')
