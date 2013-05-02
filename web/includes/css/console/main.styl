@@ -6,34 +6,35 @@
  */
 
 body
-  background-color bcolor
+  color console-color
+  background-color console-background-color
 
   // Internet Explorer
-  scrollbar-arrow-color scrollbar-fcolor
-  scrollbar-face-color scrollbar-bcolor
-  scrollbar-darkshadow-color scrollbar-fcolor
-  scrollbar-highlight-color scrollbar-fcolor
-  scrollbar-3dlight-color scrollbar-fcolor
-  scrollbar-shadow-color scrollbar-fcolor
-  scrollbar-track-color scrollbar-fcolor
+  scrollbar-arrow-color scrollbar-color
+  scrollbar-face-color scrollbar-background-color
+  scrollbar-darkshadow-color scrollbar-color
+  scrollbar-highlight-color scrollbar-color
+  scrollbar-3dlight-color scrollbar-color
+  scrollbar-shadow-color scrollbar-color
+  scrollbar-track-color scrollbar-color
 
 ::-webkit-scrollbar // WebKit browsers
     width 8px
 
 ::-webkit-scrollbar-thumb // WebKit browsers
-  background scrollbar-bcolor
+  background scrollbar-background-color
 
 ::-webkit-input-placeholder, // WebKit browsers
 :-moz-placeholder, // Mozilla Firefox 4 to 18
 ::-moz-placeholder, // Mozilla Firefox 19+
 :-ms-input-placeholder // Internet Explorer 10+
-  color placeholder-fcolor
+  color placeholder-text-color
 
 a
-  color link-fcolor
+  color link-text-color
   text-decoration none
   :hover
-    color hover-fcolor
+    color hover-text-color
       img
         opacity 0.8
 
@@ -56,12 +57,12 @@ fieldset
 input#entry
   width 100%
   height 100%
-  background-color bcolor
+  background-color console-background-color
   border-width 0
   outline-width 0
   clear both
   font-size 1.2em
-  color input-fcolor
+  color input-text-color
 
 .message
   font-size 14px
@@ -70,13 +71,13 @@ input#entry
   h4, p, ul
     margin 8px 0
   h4
-    color input-fcolor
+    color input-text-color
   p
     text-indent 2em
   ul
     padding-left 2em
   .exit
-    color link-fcolor
+    color link-text-color
 
 #scroll-pane
   overflow auto
