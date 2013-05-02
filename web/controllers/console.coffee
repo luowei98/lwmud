@@ -9,7 +9,7 @@ Channel = require('../../mud/channel')
 channel = new Channel()
 
 exports.index = (req, res) ->
-    res.render 'index.jade', {title: '风云天下'}
+    res.render 'console/index.jade', {title: '风云天下'}
 
 exports.send = (req, res) ->
     id = req.body.id
