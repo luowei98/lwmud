@@ -27,7 +27,7 @@ showMessage = (from, text, time, _class) ->
 
     messageElement = $(document.createElement 'div')
     messageElement.addClass('message')
-    messageElement.addClass(_class) if not _class?
+    messageElement.addClass(_class) if _class?
 
     text = util.toStaticHTML(text)
 
@@ -176,7 +176,7 @@ $ ->
         msg = entry.attr('value').replace '\n', ''
 
         # output entry message
-        showMessage('', msg, null, 'self-entry');
+        showMessage('', msg, null, 'self-text-color');
 
         entry.attr 'value', ''
 
