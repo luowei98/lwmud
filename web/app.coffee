@@ -20,20 +20,17 @@ app.set 'view engine', 'jade'
 app.use express.favicon publicDir + '/img/favicon.ico'
 app.use express.bodyParser()
 app.use express.methodOverride()
-app.use stylus.middleware(
-    src: path.join(__dirname, 'includes'),
-    dest: publicDir,
-    compress: true
-)
 
 if process.env.NODE_ENV or app.get('env') is 'development'
     app.use express.logger 'dev'
+    app.use express.errorHandler dumpExceptions:true, showStack:true
     app.use assets(src: 'web/includes')
+    app.use express.static publicDir
 else
     app.use express.errorHandler()
     app.use assets(src: 'web/includes', buildDir: 'web/.includes_cache', build: true)
+    app.use express.static publicDir, {maxAge: 31557600000}
 
-app.use express.static publicDir, {maxAge: 31557600000}
 app.use app.router
 
 routes app
