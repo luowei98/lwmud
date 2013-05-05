@@ -28,4 +28,8 @@ html
 
         #login-window.hide
 
+        script(type='text/javascript')
+            window.needlogin = !{JSON.stringify(needlogin)}
+
+
         != js('console')

@@ -17,19 +17,8 @@ enableLogin = ->
 
 $ ->
 
-    validator = $('div#tickets').kendoValidator().data 'kendoValidator'
+    $('div#tickets').kendoValidator().data 'kendoValidator'
 
-    status = $(".status");
+    $("button").click -> disableLogin()
 
-    $("button").click ->
-
-        disableLogin()
-        setTimeout ->
-            enableLogin()
-        , 10000
-
-        if validator.validate()
-            status.text("Hooray! Your tickets has been booked!")
-        else
-            status.text("Oops! There is invalid data in the form.")
 

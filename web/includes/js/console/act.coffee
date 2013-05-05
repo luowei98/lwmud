@@ -65,6 +65,8 @@ longPoll = (data) ->
                 when 'status'
                     # todo update both sidebar
                     alert 'c'
+                else
+                    alert 'd'
 
         # todo updateTitle
 
@@ -117,7 +119,8 @@ onConnect = (session) ->
     validator = $('div#tickets').kendoValidator().data 'kendoValidator'
     return false if not validator.validate()
 
-    nick = $('input#nick').attr 'value'
+    username = $('#nick').val()
+    password = $('#pwd').val()
 
     # todo showLoad(), lock the UI while waiting for a response
 
@@ -144,16 +147,20 @@ onConnect = (session) ->
         cache: false,
         type: 'POST',
         dataType: 'json',
-        url: '/auth/join',
-        data: { nick: nick },
+        url: '/ajaxLogin',
+        data: { username: username, password: password },
 
         success: (data) ->
             kendo.ui.progress $('div#loading-cover'), false
             onConnect(data)
 
-        error: ->
+        error: (xhr) ->
             kendo.ui.progress $('div#loading-cover'), false
-            $('li.status').text '啊呀! 无法连接服务器!'
+            data = jQuery.parseJSON(xhr.responseText)
+            if data and data.message
+                $('li.status').text data.message
+            else
+                $('li.status').text '啊呀~ 连接服务器出错了！'
     )
 
 send = (msg) ->
@@ -189,4 +196,8 @@ $ ->
     }, 10 * 1000);
     ###
 
-    showConnect()
+    if window.needlogin is false
+        showConnect()
+    else
+        onConnect(window.needlogin)
+

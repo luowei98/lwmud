@@ -8,8 +8,17 @@
 Channel = require('../../mud/channel')
 channel = new Channel()
 
-exports.index = (req, res) ->
-    res.render 'console/index.jade', {title: '风云天下'}
+exports.index = (req, res, env) ->
+
+    needlogin = false
+    if req.isAuthenticated()
+        session = env.session.createSession req.user.username
+        needlogin = { id: session.id, nick: session.nick, starttime: (new Date()).getTime() }
+
+    res.render 'console/index.jade', {
+        title: '风云天下',
+        needlogin: needlogin
+    }
 
 exports.send = (req, res) ->
     id = req.body.id

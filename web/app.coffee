@@ -6,8 +6,12 @@ http = require 'http'
 path = require 'path'
 stylus = require 'stylus'
 assets = require 'connect-assets'
-# mongoose = require 'mongoose'
+
+passport = require './passport'
 routes = require './route'
+
+user = new (require('./user'))()
+session = new (require('./session'))()
 
 app = express()
 
@@ -20,6 +24,10 @@ app.set 'view engine', 'jade'
 app.use express.favicon publicDir + '/img/favicon.ico'
 app.use express.bodyParser()
 app.use express.methodOverride()
+app.use express.cookieParser 'lwfyol'
+app.use express.session {secret: 'lwfyol', cookie: {maxAge: 60000}}
+app.use passport.initialize()
+app.use passport.session()
 
 if process.env.NODE_ENV or app.get('env') is 'development'
     app.use express.logger 'dev'
@@ -33,7 +41,9 @@ else
 
 app.use app.router
 
-routes app
+
+routes app, {passport, session, user}
+
 
 http.createServer(app).listen app.get('port'), ->
     console.log 'Express server listening on port ' + app.get 'port'

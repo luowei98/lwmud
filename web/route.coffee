@@ -10,11 +10,23 @@ notfound = require './controllers/404'
 auth = require './controllers/auth'
 console = require './controllers/console'
 
-module.exports = (app) ->
+module.exports = (app, env) ->
     # home
     app.get '/', home
 
     # auth
+    app.post '/login',
+        ((req, res, next) ->
+            auth.login(req, res, next, env)),
+    (err, req, res) ->
+        res.json 500, err.message
+
+    app.post '/ajaxLogin',
+        ((req, res, next) ->
+            auth.ajaxLogin(req, res, next, env)),
+    (err, req, res) ->
+        res.json 500, err.message
+
     app.get '/auth/login_window', auth.login_window
     app.post '/auth/join', auth.join
 
@@ -23,7 +35,8 @@ module.exports = (app) ->
         res.redirect '/console'
     app.get '/console/index', (req, res)->
         res.redirect '/console'
-    app.get '/console', console.index
+    app.get '/console', (req, res) ->
+        console.index req, res, env
     app.post '/console/send', console.send
     app.get '/console/recv', console.recv
 

@@ -5,7 +5,6 @@
 # Time: 下午1:23
 
 MESSAGE_BACKLOG = 200
-SESSION_TIMEOUT = 60 * 1000
 
 module.exports = class Channel
     messages = []

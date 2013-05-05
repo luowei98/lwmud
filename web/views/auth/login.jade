@@ -7,26 +7,28 @@
 #tickets
     h3.title 风云天下
     p 《风云天下》即将推出，敬请期待！
-    ul
-        li
-            label.username.required(for='nick') &nbsp;
-            input#nick.k-textbox(
-            type='text',
-            name='nick',
-            placeholder='您的用户名',
-            required,
-            validationMessage='请输入您的ID')
-        li
-            label.password.required(for='pwd') &nbsp;
-            input#pwd.k-textbox(
-            type='password',
-            name='pwd',
-            placeholder='您的密码',
-            required,
-            validationMessage='请输入您的密码')
+    form(action='/login', method='POST')
+        ul
+            li
+                label.username.required(for='username') &nbsp;
+                input#username.k-textbox(
+                type='text',
+                name='username',
+                placeholder='您的用户名',
+                required,
+                validationMessage='请输入您的ID')
+            li
+                label.password.required(for='password') &nbsp;
+                input#password.k-textbox(
+                type='password',
+                name='password',
+                placeholder='您的密码',
+                required,
+                validationMessage='请输入您的密码')
 
-        li.accept
-            button#login-button.k-button(type='submit') 进 入
+            li.accept
+                button#login-button.k-button(type='submit') 进 入
 
-        li.status.invalid
+            - if (message)
+                li.status.invalid= message
 
