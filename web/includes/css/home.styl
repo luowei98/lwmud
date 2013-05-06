@@ -23,7 +23,21 @@ body
     margin-left: 16%
     margin-top: 10%
 
-div#tickets
+#login-button
+    margin-left: 24px
+    font-size: 16px
+    width: 120px
+    height: 40px
+    background-color: #444
+    margin-top: 16px
+    color: #ddd
+
+button.loading
+    background: url('/img/button-loading.gif') no-repeat 64px 17px
+    padding-left: 20px
+    text-align: left
+
+#tickets
     h3.title
         font-family Consolas, "隶书", "宋体", Helvetica
         font-size: 72px
@@ -35,15 +49,6 @@ div#tickets
 
     li
         margin: 16px 0
-
-        button#login-button
-            margin-left: 24px
-            font-size: 16px
-            width: 120px
-            height: 40px
-            background-color: rgba(0, 0, 0, 0.7)
-            margin-top: 16px
-            color: #ddd
 
     input[type='text'],
     input[type='password']
@@ -62,19 +67,14 @@ div#tickets
         border: 1px solid transparent
         border-bottom: 1px solid #666
 
-    label.username
-        background: url('/img/user.png') no-repeat 0 0
+    label
         display: inline-block
         width: 24px
         height: 24px
+        margin-right: 8px
+
+    label.username
+        background: url('/img/user.png') no-repeat 0 0
 
     label.password
         background: url('/img/password.png') no-repeat 0 0
-        display: inline-block
-        width: 24px
-        height: 24px
-
-    button.loading
-        background: url('/img/button-loading.gif') no-repeat 64px 17px
-        padding-left: 20px
-        text-align: left
