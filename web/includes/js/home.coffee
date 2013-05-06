@@ -8,17 +8,12 @@
 #= require 'kendo/kendo.web.min'
 
 
-disableLogin = ->
-    $("#login-button").addClass('k-state-disabled loading').text '登录中'
-
-enableLogin = ->
-    $('#login-button').removeClass('k-state-disabled loading').text '进 入'
-
-
 $ ->
 
-    $('div#tickets').kendoValidator().data 'kendoValidator'
+    validator = $('#tickets').kendoValidator().data 'kendoValidator'
 
-    $("button").click -> disableLogin()
+    $("#login-button").click ->
+        return false if not validator.validate()
+        $("#login-button").addClass('k-state-disabled loading').text '登录中'
 
 
