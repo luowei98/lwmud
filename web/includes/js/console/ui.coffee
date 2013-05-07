@@ -5,7 +5,7 @@
 # Time: 下午7:36
 
 # set login window open function
-lw = $('div#login-window')
+lw = $('#login-window')
 lw.kendoWindow(
     title: false,
     height: '300px',
@@ -15,15 +15,15 @@ lw.kendoWindow(
     content: '/auth/login_window'
 
     activate: ->
-        $('input#nick').focus()
+        $('#nick').focus()
     close: ->
-        $('input#entry').focus()
+        $('#entry').focus()
     open: ->
         this.wrapper.css top: ($(window).height() - 300) / 3
     refresh: ->
         # set accept the terms and condition of service by default
-        $('input#accept-checkbox')[0].checked = true
-        $('button#login-button').click login
+        $('#accept-checkbox')[0].checked = true
+        $('#login-button').click login
 )
 @showConnect = ->
     lw.data('kendoWindow').center().open()
@@ -31,7 +31,7 @@ lw.kendoWindow(
 # document ready
 $ ->
     # resize layer
-    layer = $('div#horizontal')
+    layer = $('#horizontal')
     resizeLayer = ->
         layer.width $(window).width() - 2
         layer.height $(window).height() - 2
@@ -40,7 +40,7 @@ $ ->
 
     window.onresize = ->
         resizeLayer()
-        lw = $('div#login-window').data('kendoWindow')
+        lw = $('#login-window').data('kendoWindow')
         lw.center()
         lw.wrapper.css top: ($(window).height() - 300) / 3
 
@@ -52,14 +52,14 @@ $ ->
     ]
 
     # set center layer
-    $('div#vertical').kendoSplitter orientation: 'vertical', panes: [
+    $('#vertical').kendoSplitter orientation: 'vertical', panes: [
         { collapsible: false },
         { collapsible: false, resizable: false, size: '48px' }
     ]
 
     # set both side panelbar
-    $('ul#left-panelbar').kendoPanelBar expandMode: 'multiple'
-    $('ul#right-panelbar').kendoPanelBar expandMode: 'multiple'
+    $('#left-panelbar').kendoPanelBar expandMode: 'multiple'
+    $('#right-panelbar').kendoPanelBar expandMode: 'multiple'
 
 
 

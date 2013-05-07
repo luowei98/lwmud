@@ -16,8 +16,8 @@ CONFIG = {
 }
 
 scrollDown = ->
-    $('div#middle-pane').scrollTop $('div#middle-pane')[0].scrollHeight
-    $('input#entry').focus()
+    $('#middle-pane').scrollTop $('#middle-pane')[0].scrollHeight
+    $('#entry').focus()
 
 showMessage = (from, text, time, _class) ->
     return if not text?
@@ -34,7 +34,7 @@ showMessage = (from, text, time, _class) ->
     content = '<div>' + text + '</div>'
     messageElement.html(content)
 
-    $('div#middle-pane').append(messageElement)
+    $('#middle-pane').append(messageElement)
 
     scrollDown()
 
@@ -98,8 +98,10 @@ onConnect = (session) ->
     CONFIG.last_message_time = session.starttime
 
     # close login window
-    loginWindow = $('div#login-window').data 'kendoWindow'
+    loginWindow = $('#login-window').data 'kendoWindow'
     loginWindow.close()
+
+    $('#entry').focus()
 
     $(window).bind 'blur', ->
         CONFIG.focus = false
@@ -116,7 +118,7 @@ onConnect = (session) ->
 @login = ->
     $('li.status').text ''
 
-    validator = $('div#tickets').kendoValidator().data 'kendoValidator'
+    validator = $('#tickets').kendoValidator().data 'kendoValidator'
     return false if not validator.validate()
 
     username = $('#nick').val()
@@ -141,7 +143,7 @@ onConnect = (session) ->
     }
     ###
 
-    kendo.ui.progress $('div#loading-cover'), true
+    kendo.ui.progress $('#loading-cover'), true
     $('div#loading-cover .k-loading-text').text('正在登陆...').css top: 0, left:0
     $.ajax(
         cache: false,
@@ -151,11 +153,11 @@ onConnect = (session) ->
         data: { username: username, password: password },
 
         success: (data) ->
-            kendo.ui.progress $('div#loading-cover'), false
+            kendo.ui.progress $('#loading-cover'), false
             onConnect(data)
 
         error: (xhr) ->
-            kendo.ui.progress $('div#loading-cover'), false
+            kendo.ui.progress $('#loading-cover'), false
             data = jQuery.parseJSON(xhr.responseText)
             if data and data.message
                 $('li.status').text data.message
@@ -176,7 +178,7 @@ send = (msg) ->
 $ ->
 
     # send message in entry box
-    $('input#entry').keypress (e) ->
+    $('#entry').keypress (e) ->
         return if e.keyCode isnt 13
 
         entry = $('#entry');
