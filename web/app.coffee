@@ -9,8 +9,9 @@ assets = require 'connect-assets'
 
 passport = require './passport'
 routes = require './route'
+seed = require './db/seed'
+user = require './models/user'
 
-user = new (require('./user'))()
 session = new (require('./session'))()
 
 app = express()
@@ -41,9 +42,7 @@ else
 
 app.use app.router
 
-
 routes app, {passport, session, user}
-
 
 http.createServer(app).listen app.get('port'), ->
     console.log 'Express server listening on port ' + app.get 'port'

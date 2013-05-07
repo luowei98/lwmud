@@ -1,7 +1,14 @@
 Thumbs.db
 *.swp
+
+# ignore WebStorm config
 .idea/
+
 /node_modules
-/.coffee_cache
-/web/public/css
 /web/.includes_cache
+
+# for coffee build files
+*.map
+*.js
+!/app.js
+
