@@ -8,12 +8,41 @@
 #= require 'kendo/kendo.web.min'
 
 
+disableLogin = () ->
+    $("#login-button").addClass('k-state-disabled loading').text '登录中'
+
+enableLogin = () ->
+    $("#login-button").removeClass('k-state-disabled loading').text '进 入'
+
 $ ->
 
     validator = $('#tickets').kendoValidator().data 'kendoValidator'
 
     $("#login-button").click ->
         return false if not validator.validate()
-        $("#login-button").addClass('k-state-disabled loading').text '登录中'
 
+        disableLogin()
+        $.ajax(
+            cache: false,
+            type: 'POST',
+            dataType: 'json',
+            url: '/homeLogin',
+            data: {
+                username: $('#username').val(),
+                password: $('#password').val()
+            },
 
+            success: (data) ->
+                if data.redirect
+                    window.location = data.redirect
+                else
+                    $('li.status').text data.message
+
+            error: (xhr) ->
+                enableLogin()
+                data = jQuery.parseJSON(xhr.responseText)
+                if data and data.message
+                    $('li.status').text data.message
+                else
+                    $('li.status').text '啊呀~ 连接服务器出错了！'
+        )

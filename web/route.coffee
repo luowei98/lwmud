@@ -15,15 +15,15 @@ module.exports = (app, env) ->
     app.get '/', home
 
     # auth
-    app.post '/login',
+    app.post '/homeLogin',
         ((req, res, next) ->
-            auth.login(req, res, next, env)),
+            auth.homeLogin(req, res, next, env)),
     (err, req, res) ->
         res.json 500, err.message
 
-    app.post '/ajaxLogin',
+    app.post '/consoleLogin',
         ((req, res, next) ->
-            auth.ajaxLogin(req, res, next, env)),
+            auth.consoleLogin(req, res, next, env)),
     (err, req, res) ->
         res.json 500, err.message
 

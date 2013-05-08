@@ -149,7 +149,7 @@ onConnect = (session) ->
         cache: false,
         type: 'POST',
         dataType: 'json',
-        url: '/ajaxLogin',
+        url: '/consoleLogin',
         data: { username: username, password: password },
 
         success: (data) ->

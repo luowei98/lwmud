@@ -5,4 +5,4 @@
 # Time: 下午2:14
 
 module.exports = (req, res) ->
-    res.render 'index.jade', {title: '风云天下', message: req.session.messages}
+    res.render 'index.jade', {title: '风云天下'}
