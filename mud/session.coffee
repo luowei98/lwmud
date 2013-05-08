@@ -23,20 +23,20 @@ module.exports = class Session
         console.info 'initialized session'
 
 
-    createSession: (nick) ->
+    createSession: (username) ->
 
-        for session in sessions
-            return null if session and session.nick is nick
+        for _, session of sessions
+            return null if session and session.username is username
 
         session = {
-            nick: nick,
+            username: username,
             id: Math.floor(Math.random() * 99999999999).toString(),
             timestamp: new Date()
 
-            poke: -> session.time = new Data()
+            poke: -> session.timestamp = new Date()
 
             destroy: ->
-                #todo add msg channel.appendMessage(session.nick, 'part')
+                #todo add msg channel.appendMessage(session.username, 'part')
                 delete sessions[session.id]
 
         }
@@ -45,3 +45,9 @@ module.exports = class Session
 
         return session
 
+    findSession: (username) ->
+
+        for _, session of sessions
+            return session if session.username is username
+
+        return null

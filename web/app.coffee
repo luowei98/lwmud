@@ -12,7 +12,8 @@ routes = require './route'
 seed = require './db/seed'
 user = require './models/user'
 
-session = new (require('./session'))()
+session = new (require('../mud/session'))()
+channel = new (require('../mud/channel'))()
 
 app = express()
 
@@ -42,7 +43,7 @@ else
 
 app.use app.router
 
-routes app, {passport, session, user}
+routes app, {passport, session, user, channel}
 
 http.createServer(app).listen app.get('port'), ->
     console.log 'Express server listening on port ' + app.get 'port'

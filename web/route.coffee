@@ -28,7 +28,6 @@ module.exports = (app, env) ->
         res.json 500, err.message
 
     app.get '/auth/login_window', auth.login_window
-    app.post '/auth/join', auth.join
 
     # console
     app.get '/console/', (req, res)->

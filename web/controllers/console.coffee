@@ -12,8 +12,12 @@ exports.index = (req, res, env) ->
 
     needlogin = false
     if req.isAuthenticated()
-        session = env.session.createSession req.user.username
-        needlogin = { id: session.id, nick: session.nick, starttime: (new Date()).getTime() }
+        session = env.session.findSession req.user.username
+        needlogin = {
+            id: session.id,
+            nick: session.nick,
+            starttime: session.timestamp.getTime()
+        } if session?
 
     res.render 'console/index.jade', {
         title: '风云天下',
