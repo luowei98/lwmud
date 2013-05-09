@@ -14,10 +14,10 @@
 @fallback-texture: none;
 
 /* Widget Base Styles */
-@widget-text-color: #676767;
+@widget-text-color: #eee;
 @widget-gradient: none;
 @widget-background-color: #ff0;
-@widget-border-color: #ccc;
+@widget-border-color: #999;
 @widget-shadow: none;
 
 /* Selects, Dropdowns */
@@ -35,7 +35,7 @@
 
 /* Headers */
 @header-text-color: #454545;
-@header-background-color: #fff;
+@header-background-color: #444;
 
 /* Buttons */
 @button-text-color: @widget-text-color;
@@ -52,10 +52,10 @@
 /* Widget States */
 
 /* Hover State */
-@hover-text-color: @widget-text-color;
+@hover-text-color: #fff;
 @hover-gradient: none;
-@hover-background-color: transparent;
-@hover-border-color: #666;
+@hover-background-color: #555;
+@hover-border-color: @hover-background-color;
 @hover-shadow: none;
 
 /*Focused State*/
@@ -64,10 +64,10 @@
 @focused-item-shadow: none;
 
 /* Selected State */
-@selected-text-color: #454545;
+@selected-text-color: @hover-text-color;
 @selected-gradient: none;
-@selected-background-color: #bbb;
-@selected-border-color: #ccc;
+@selected-background-color: @button-background-color;
+@selected-border-color: #999;
 @selected-shadow: none;
 
 /* Active State */
