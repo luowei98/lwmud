@@ -36,8 +36,10 @@ module.exports = (app, env) ->
         res.redirect '/console'
     app.get '/console', (req, res) ->
         console.index req, res, env
-    app.post '/console/send', console.send
-    app.get '/console/recv', console.recv
+    app.post '/console/send', (req, res) ->
+        console.send req, res, env
+    app.get '/console/recv', (req, res) ->
+        console.recv req, res, env
 
     # 404
     app.get '*', notfound

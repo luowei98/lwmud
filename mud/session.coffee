@@ -23,6 +23,9 @@ module.exports = class Session
         console.info 'initialized session'
 
 
+    sessions: () ->
+        return sessions
+
     createSession: (username) ->
 
         for _, session of sessions
@@ -51,3 +54,9 @@ module.exports = class Session
             return session if session.username is username
 
         return null
+
+    usernames: (except) ->
+        names = []
+        for _, session of sessions
+            names.push session.username unless session.username is except
+        return names

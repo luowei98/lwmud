@@ -38,6 +38,15 @@ showMessage = (from, text, time, _class) ->
 
     scrollDown()
 
+refleshUser = (users) ->
+    users = [users] unless util.typeIsArray users
+
+    $('#online-text').text('当前用户 (' + users.length + ')')
+    for username in users
+        continue if not username?
+        panelBar = $('#online-users').kendoPanelBar().data('kendoPanelBar')
+        panelBar.append '<li>' + username + '</li>'
+    panelBar._updateClasses()
 
 transmission_errors = 0
 longPoll = (data) ->
@@ -65,6 +74,9 @@ longPoll = (data) ->
                 when 'status'
                     # todo update both sidebar
                     alert 'c'
+                when 'users'
+                    if message? and message.text?
+                        refleshUser(message.text)
                 else
                     alert 'd'
 

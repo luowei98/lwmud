@@ -21,7 +21,11 @@ authCallback = (req, res, env, err, user, info, next) ->
     req.logIn user, (err) ->
         res.json 500, {message: err.message} if err
 
-        #todo channel.addmsg session.nick join
+        # let everyone know i joined
+        env.channel.appendMessage 'join', session.username
+
+        # let me know who online
+        env.channel.appendMessage 'users', env.session.usernames(), session.username
 
         next(session) if next
 

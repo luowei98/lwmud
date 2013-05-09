@@ -5,9 +5,6 @@
 # Time: 下午5:10
 
 
-Channel = require('../../mud/channel')
-channel = new Channel()
-
 exports.index = (req, res, env) ->
 
     needlogin = false
@@ -24,17 +21,17 @@ exports.index = (req, res, env) ->
         needlogin: needlogin
     }
 
-exports.send = (req, res) ->
+exports.send = (req, res, env) ->
     id = req.body.id
     text = req.body.text
 
     # todo session check & session poke
 
-    channel.appendMessage id, 'msg', '什么?'
+    env.channel.appendMessage id, 'msg', '什么?'
     res.json 200, time: new Date().getTime()
 
 
-exports.recv = (req, res) ->
+exports.recv = (req, res, env) ->
     since = req.query.since
     if not since?
         res.json 400, error: '参数错误'
@@ -44,6 +41,6 @@ exports.recv = (req, res) ->
 
     since = parseInt since, 10
 
-    channel.query since, (messages) ->
+    env.channel.query req.user.username, since, (messages) ->
         # todo session poke
         res.json 200, messages: messages

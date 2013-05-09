@@ -13,7 +13,7 @@ seed = require './db/seed'
 user = require './models/user'
 
 session = new (require('../mud/session'))()
-channel = new (require('../mud/channel'))()
+channel = new (require('../mud/channel'))(session)
 
 app = express()
 
@@ -27,7 +27,7 @@ app.use express.favicon publicDir + '/img/favicon.ico'
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use express.cookieParser 'lwfyol'
-app.use express.session {secret: 'lwfyol', cookie: {maxAge: 60000}}
+app.use express.session {secret: 'lwfyol', cookie: {maxAge: 6000000}}
 app.use passport.initialize()
 app.use passport.session()
 
