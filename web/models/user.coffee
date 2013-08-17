@@ -7,10 +7,8 @@
 
 mongoose = require '../db/schema'
 
-Schema = mongoose.Schema
-
 # user schema
-userSchema = new Schema
+userSchema = new mongoose.Schema
     username:
         type: String
         required: true
@@ -29,9 +27,45 @@ userSchema = new Schema
         type: Boolean
         required: true
 
-# password verification
+    lastActtime:
+        type: Date
+        'default': Date.now
+
+    needClose:
+        type: Boolean
+        'default': false
+
+    connectionToken:
+        type: String
+
+
 userSchema.methods.comparePassword = (candidatePassword, cb) ->
     cb null, candidatePassword is @password
 
-module.exports = User = mongoose.model("User", userSchema)
+userSchema.methods.connected = ->
+    @lastActtime = new Date()
+    @needClose = false
+    @connectionToken = Math.floor(Math.random() * 99999999999).toString()
+
+userSchema.methods.poke = ->
+    @lastActtime = new Date()
+
+userSchema.methods.dead = ->
+    @needClose = true
+
+
+module.exports.model = userModel = mongoose.model("User", userSchema)
+
+module.exports.createDefault = (next) ->
+    userModel.findOne { username: 'rob' }, (err, user) ->
+        next err if err
+        unless user?
+            userModel.create {
+                username: 'rob',
+                email: 'rob@example.com',
+                password: 'admin',
+                admin: true
+            }, next
+        else
+            next 'default user already exists'
 
